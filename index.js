@@ -72,7 +72,7 @@ NOTE: This will be a callback function for the tasks below
 */
 
 function inning() {
-  const score = Math.round(Math.random() * 2);
+  const score = Math.floor(Math.random() * 3);
   return score;
 }
 
@@ -90,8 +90,17 @@ Use the finalScore function below to do the following:
 }
 */
 
-function finalScore(/*code Here*/) {
-  /*Code Here*/
+function finalScore(inningcb, numOfInnings) {
+  let totalScore = {};
+  let homeScore = 0;
+  let awayScore = 0;
+  for (let i = 0; i < numOfInnings; i++) {
+    homeScore = homeScore + inningcb();
+    awayScore = awayScore + inningcb();
+  }
+  totalScore.Home = homeScore;
+  totalScore.Away = awayScore;
+  return totalScore;
 }
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
