@@ -91,16 +91,17 @@ Use the finalScore function below to do the following:
 */
 
 function finalScore(inningcb, numOfInnings) {
-  let totalScore = {};
   let homeScore = 0;
   let awayScore = 0;
   for (let i = 0; i < numOfInnings; i++) {
     homeScore = homeScore + inningcb();
     awayScore = awayScore + inningcb();
   }
-  totalScore.Home = homeScore;
-  totalScore.Away = awayScore;
-  return totalScore;
+
+  return {
+    Home: homeScore,
+    Away: awayScore,
+  };
 }
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
@@ -108,8 +109,11 @@ Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(inningcb) {
+  return {
+    Home: inningcb(),
+    Away: inningcb(),
+  };
 }
 
 /* ⚾️⚾️⚾️ Task 5: scoreboard() ⚾️⚾️⚾️
@@ -153,9 +157,29 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(getInningScorecb, inningcb, numOfInnings) {
+  const gameStats = [];
+  let currentHomeTotal = 0;
+  let currentAwayTotal = 0;
+  for (let i = 1; i < numOfInnings + 1; i++) {
+    const inningTotal = getInningScorecb(inningcb);
+    gameStats.push(
+      `Inning ${i}: Home ${inningTotal.Home} - Away ${inningTotal.Away}`
+    );
+    currentHomeTotal = currentHomeTotal + inningTotal.Home;
+    currentAwayTotal = currentAwayTotal + inningTotal.Away;
+  }
+
+  if (currentHomeTotal !== currentAwayTotal) {
+    return `${gameStats}\n Final Score: Away ${currentAwayTotal} - Home ${currentHomeTotal}`;
+  } else {
+    return `${gameStats}\n This game will require extra innings: Away ${currentAwayTotal} - Home ${currentHomeTotal}`;
+  }
 }
+
+const game1 = scoreboard(getInningScore, inning, 9);
+
+console.log(game1);
 
 /* 🛑🛑🛑🛑🛑 Please do not modify anything below this line 🛑🛑🛑🛑🛑 */
 function foo() {
